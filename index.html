@@ -3,16 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Product Launch - Coming Soon</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome for Social Media Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
 </head>
-<body>
-  <div class="container">
-    <h1 class="title">Coming Soon</h1>
-    <p class="subtitle">Our website is under construction. Stay tuned!</p>
-    <div class="progress-bar">
-      <div class="progress"></div>
+<body class="bg-gradient-to-r from-purple-900 via-purple-700 to-purple-500 text-white font-sans overflow-hidden">
+
+  <!-- Custom Cursor -->
+  <div id="cursor" class="absolute w-12 h-12 bg-purple-400 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 transition-all"></div>
+
+  <!-- Product Launch Page Layout -->
+  <div class="flex flex-col md:flex-row items-center justify-center min-h-screen py-8 px-4">
+
+    <!-- Left Side: Product Launch Text and Social Icons -->
+    <div class="text-center md:text-left md:w-1/2 px-8 py-6 relative">
+      <!-- Heading -->
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-white" id="launchText">Product Launching Soon</h1>
+
+      
+      <!-- Description -->
+      <p class="text-lg mt-6 opacity-0" id="launchDescription">We're getting ready to reveal something amazing! Stay tuned for our product launch. It's going to be worth the wait!</p>
+
+      <!-- Social Media Icons -->
+      <div class="mt-8 opacity-2" id="socialIcons">
+        <a href="#" class="mr-4 text-3xl hover:text-purple-200 transition duration-300 transform hover:scale-110">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="#" class="mr-4 text-3xl hover:text-purple-200 transition duration-300 transform hover:scale-110">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="mr-4 text-3xl hover:text-purple-200 transition duration-300 transform hover:scale-110">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="mr-4 text-3xl hover:text-purple-200 transition duration-300 transform hover:scale-110">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
     </div>
+
+    <!-- Right Side: Video with Mute/Unmute Button -->
+    <div class="md:w-1/2 w-full h-64 md:h-auto relative">
+      <video id="productVideo" autoplay loop muted class="w-full h-full object-cover opacity-70 rounded-lg shadow-lg">
+        <source src="video/FASHION (2).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Mute/Unmute Button -->
+      <button id="muteButton" class="absolute bottom-8 right-8 bg-purple-600 text-white p-2 rounded-full opacity-75 hover:opacity-100 transition-all">
+        <i id="muteIcon" class="fas fa-volume-up text-xl"></i>
+      </button>
+    </div>
+
   </div>
+
+  <!-- Footer with Social Media Links -->
+  <footer class="bg-purple-700 py-4">
+    <div class="flex justify-center space-x-6">
+      <a href="#" class="text-2xl text-white hover:text-purple-200 transition duration-300 transform hover:scale-110">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="#" class="text-2xl text-white hover:text-purple-200 transition duration-300 transform hover:scale-110">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#" class="text-2xl text-white hover:text-purple-200 transition duration-300 transform hover:scale-110">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="#" class="text-2xl text-white hover:text-purple-200 transition duration-300 transform hover:scale-110">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+  </footer>
+
+  <!-- GSAP Animations -->
+  <script>
+    // Launch Text Animation
+    gsap.from("#launchText", {
+      opacity: 0,
+      y: -50,
+      duration: 1,
+      delay: 0.5,
+      ease: "power2.out"
+    });
+
+    // Launch Description Animation
+    gsap.from("#launchDescription", {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      delay: 1,
+      ease: "power2.out"
+    });
+
+    // Social Icons Animation with Staggered Effect
+    gsap.from("#socialIcons a", {
+      opacity: 0,
+      x: -50,
+      duration: 1,
+      stagger: 0.2,
+      delay: 1.5,
+      ease: "power2.out"
+    });
+
+    // Mute/Unmute Button functionality
+    const muteButton = document.getElementById('muteButton');
+    const muteIcon = document.getElementById('muteIcon');
+    const video = document.getElementById('productVideo');
+    
+    muteButton.addEventListener('click', () => {
+      if (video.muted) {
+        video.muted = false;
+        muteIcon.classList.remove('fa-volume-mute');
+        muteIcon.classList.add('fa-volume-up');
+      } else {
+        video.muted = true;
+        muteIcon.classList.remove('fa-volume-up');
+        muteIcon.classList.add('fa-volume-mute');
+      }
+    });
+
+    // Cursor Follow Animation
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, {
+        x: e.pageX,
+        y: e.pageY,
+        duration: 0.2,
+        ease: "power2.out"
+      });
+    });
+
+    // Social Media Icons Hover Animations
+    const socialIcons = document.querySelectorAll("#socialIcons a");
+    socialIcons.forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        gsap.to(icon, {
+          scale: 1.2,
+          duration: 0.3,
+          ease: "power1.out"
+        });
+      });
+      icon.addEventListener('mouseleave', () => {
+        gsap.to(icon, {
+          scale: 1,
+          duration: 0.3,
+          ease: "power1.out"
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
